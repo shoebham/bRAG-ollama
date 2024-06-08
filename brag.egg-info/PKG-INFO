@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: brag
+Version: 0.0.1
+Requires-Python: >=3.11
+Requires-Dist: fastapi
+Requires-Dist: openai
+Requires-Dist: pydantic-settings
+Requires-Dist: uvicorn
+Requires-Dist: gunicorn
+Requires-Dist: qdrant-client[fastembed]
+Requires-Dist: sentry-sdk
+Requires-Dist: pugsql
+Requires-Dist: psycopg2-binary
+Provides-Extra: dev
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: black; extra == "dev"

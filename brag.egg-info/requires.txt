@@ -1,0 +1,13 @@
+fastapi
+openai
+pydantic-settings
+uvicorn
+gunicorn
+qdrant-client[fastembed]
+sentry-sdk
+pugsql
+psycopg2-binary
+
+[dev]
+ruff
+black
