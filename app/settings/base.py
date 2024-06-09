@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     APP_NAME:str = "bRAG"
     ENVIRONMENT:str = Field(env = "ENVIRONMENT",default=Environments.LOCAL.value)
     OPENAI_API_KEY: str = Field(env="OPENAI_API_KEY", default="None")
+    GENERATION_TIMEOUT_SEC: int = Field(env="GENERATION_TIMEOUT_SEC", default=120)
 
 
     @property

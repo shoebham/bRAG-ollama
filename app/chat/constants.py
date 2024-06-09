@@ -2,7 +2,7 @@
 from enum import StrEnum
 
 class FailureReasonsEnum(StrEnum):
-    OPENAI_ERROR = "OpenAI call failed"
+    API_ERROR = "API call failed"
     STREAM_TIMEOUT = "Stream timed out"
     FAILED_PROCESSING = "Post Processing Failed"
     NO_DOCUMENTS_FOUND = "No Documents Found"

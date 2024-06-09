@@ -6,17 +6,17 @@ from starlette import status
 from app.chat.constants import FailureReasonsEnum
 
 
-class OpenAIException(HTTPException):
+class APIException(HTTPException):
     def __init__(self):
-        super().__init__(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=FailureReasonsEnum.OPENAI_ERROR.value)
+        super().__init__(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=FailureReasonsEnum.API_ERROR.value)
 
 
-class OpenAIFailedProcessingException(HTTPException):
+class FailedProcessingException(HTTPException):
     def __init__(self):
         super().__init__(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=FailureReasonsEnum.FAILED_PROCESSING.value)
 
 
-class OpenAIStreamTimeoutException(HTTPException):
+class StreamTimeoutException(HTTPException):
     def __init__(self):
         super().__init__(status_code=status.HTTP_504_GATEWAY_TIMEOUT, detail=FailureReasonsEnum.STREAM_TIMEOUT.value)
 
