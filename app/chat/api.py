@@ -26,3 +26,11 @@ async def completion_stream(input_message:BaseMessage) -> StreamingResponse:
         return await OllamaService.chat_completion_with_streaming(input_message=input_message)
     except:
         raise APIException
+
+
+@router.post("/v1/qa-create")
+async def qa_create(input_message: BaseMessage) -> Message:
+    try:
+        return await OllamaService.qa_without_stream(input_message=input_message)
+    except:
+        raise APIException
