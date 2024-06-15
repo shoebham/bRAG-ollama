@@ -46,7 +46,7 @@ grpcio==1.59.2
     #   qdrant-client
 grpcio-tools==1.59.2
     # via qdrant-client
-gunicorn==21.2.0
+gunicorn==22.0.0
     # via brag (pyproject.toml)
 h11==0.14.0
     # via
