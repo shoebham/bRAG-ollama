@@ -1,4 +1,7 @@
 fastapi
+async-timeout
+async_generator
+ollama
 openai
 pydantic-settings
 uvicorn

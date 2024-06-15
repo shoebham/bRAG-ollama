@@ -2,9 +2,12 @@
 name = "brag"
 version = "0.0.1"
 requires-python = ">=3.11"
-dependencies = ["fastapi", "openai", "pydantic-settings", "uvicorn", "gunicorn", "qdrant-client[fastembed]", "sentry-sdk", "pugsql", "psycopg2-binary"]
+dependencies = ["fastapi","async-timeout","async_generator","ollama", "openai", "pydantic-settings", "uvicorn", "gunicorn", "qdrant-client[fastembed]", "sentry-sdk", "pugsql", "psycopg2-binary"]
 
 [project.optional-dependencies]
 dev = ["ruff","black"]
+
+[tool.setuptools]
+py-modules = []
 
 

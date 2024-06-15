@@ -4,6 +4,7 @@
 
 # from openai.types.chat import ChatCompletion
 
+import ollama
 from app.chat.constants import ChatRolesEnum
 from app.chat.exceptions import RetrievalNoDocumentsFoundException
 from app.chat.models import BaseMessage,Message

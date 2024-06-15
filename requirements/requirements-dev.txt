@@ -8,42 +8,36 @@ annotated-types==0.6.0
     # via pydantic
 anyio==3.7.1
     # via
-    #   fast-depends
     #   fastapi
     #   httpx
     #   openai
     #   starlette
-    #   watchfiles
+async-generator==1.10
+    # via brag (pyproject.toml)
+async-timeout==4.0.3
+    # via brag (pyproject.toml)
+black==24.4.2
+    # via brag (pyproject.toml)
 certifi==2023.7.22
     # via
     #   httpcore
     #   httpx
     #   requests
     #   sentry-sdk
-cfgv==3.4.0
-    # via pre-commit
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via
-    #   typer
+    #   black
     #   uvicorn
 coloredlogs==15.0.1
     # via onnxruntime
-distlib==0.3.7
-    # via virtualenv
 distro==1.8.0
     # via openai
-fast-depends==2.2.1
-    # via faststream
 fastapi==0.104.1
     # via brag (pyproject.toml)
 fastembed==0.1.1
     # via qdrant-client
-faststream[nats]==0.2.11
-    # via brag (pyproject.toml)
-filelock==3.13.1
-    # via virtualenv
 flatbuffers==23.5.26
     # via onnxruntime
 grpcio==1.59.2
@@ -64,34 +58,31 @@ hpack==4.0.0
     # via h2
 httpcore==1.0.1
     # via httpx
-httpx[http2]==0.25.1
+httpx[http2]==0.27.0
     # via
+    #   ollama
     #   openai
     #   qdrant-client
 humanfriendly==10.0
     # via coloredlogs
 hyperframe==6.0.1
     # via h2
-identify==2.5.31
-    # via pre-commit
 idna==3.4
     # via
     #   anyio
     #   httpx
     #   requests
-iniconfig==2.0.0
-    # via pytest
 mpmath==1.3.0
     # via sympy
-nats-py==2.6.0
-    # via faststream
-nodeenv==1.8.0
-    # via pre-commit
+mypy-extensions==1.0.0
+    # via black
 numpy==1.26.1
     # via
     #   onnx
     #   onnxruntime
     #   qdrant-client
+ollama==0.2.1
+    # via brag (pyproject.toml)
 onnx==1.15.0
     # via fastembed
 onnxruntime==1.16.1
@@ -100,17 +91,15 @@ openai==1.1.1
     # via brag (pyproject.toml)
 packaging==23.2
     # via
+    #   black
     #   gunicorn
     #   onnxruntime
-    #   pytest
+pathspec==0.12.1
+    # via black
 platformdirs==3.11.0
-    # via virtualenv
-pluggy==1.3.0
-    # via pytest
+    # via black
 portalocker==2.8.2
     # via qdrant-client
-pre-commit==3.5.0
-    # via brag (pyproject.toml)
 protobuf==4.25.0
     # via
     #   grpcio-tools
@@ -122,7 +111,6 @@ pugsql==0.2.4
     # via brag (pyproject.toml)
 pydantic==2.4.2
     # via
-    #   fast-depends
     #   fastapi
     #   openai
     #   pydantic-settings
@@ -131,12 +119,8 @@ pydantic-core==2.10.1
     # via pydantic
 pydantic-settings==2.0.3
     # via brag (pyproject.toml)
-pytest==7.4.3
-    # via brag (pyproject.toml)
 python-dotenv==1.0.0
     # via pydantic-settings
-pyyaml==6.0.1
-    # via pre-commit
 qdrant-client[fastembed]==1.6.4
     # via brag (pyproject.toml)
 requests==2.31.0
@@ -161,15 +145,12 @@ tqdm==4.66.1
     # via
     #   fastembed
     #   openai
-typer==0.9.0
-    # via faststream
 typing-extensions==4.8.0
     # via
     #   fastapi
     #   openai
     #   pydantic
     #   pydantic-core
-    #   typer
 urllib3==1.26.18
     # via
     #   qdrant-client
@@ -177,12 +158,6 @@ urllib3==1.26.18
     #   sentry-sdk
 uvicorn==0.24.0.post1
     # via brag (pyproject.toml)
-uvloop==0.19.0
-    # via faststream
-virtualenv==20.24.6
-    # via pre-commit
-watchfiles==0.21.0
-    # via faststream
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

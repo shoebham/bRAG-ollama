@@ -3,6 +3,9 @@ Name: brag
 Version: 0.0.1
 Requires-Python: >=3.11
 Requires-Dist: fastapi
+Requires-Dist: async-timeout
+Requires-Dist: async_generator
+Requires-Dist: ollama
 Requires-Dist: openai
 Requires-Dist: pydantic-settings
 Requires-Dist: uvicorn

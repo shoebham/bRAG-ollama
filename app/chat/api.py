@@ -32,3 +32,10 @@ async def qa_create(input_message: BaseMessage) -> Message:
         return await OllamaService.qa_without_stream(input_message=input_message)
     except:
         raise APIException
+
+
+# from app.db import messages_queries
+
+# @router.get("/v1/messages")
+# async def get_messages() -> list[Message]:
+#     return [Message(**message) for message in messages_queries.select_all()]

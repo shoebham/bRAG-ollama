@@ -14,7 +14,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/code/
-    command: ["bash", "-c","dbmate up && python -m uvicorn --reload app.main:app"]
+    command: ["bash", "-c", "dbmate up && python -m uvicorn --host 0.0.0.0 --reload app.main:app"]
     env_file:
       - .env
 
