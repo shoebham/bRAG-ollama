@@ -83,7 +83,7 @@ numpy==1.26.1
     #   qdrant-client
 ollama==0.2.1
     # via brag (pyproject.toml)
-onnx==1.15.0
+onnx==1.16.0
     # via fastembed
 onnxruntime==1.16.1
     # via fastembed
