@@ -141,7 +141,7 @@ sympy==1.12
     # via onnxruntime
 tokenizers==0.13.3
     # via fastembed
-tqdm==4.66.1
+tqdm==4.66.3
     # via
     #   fastembed
     #   openai
