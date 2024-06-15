@@ -135,7 +135,7 @@ sniffio==1.3.0
     #   httpx
 sqlalchemy==1.4.50
     # via pugsql
-starlette==0.27.0
+starlette==0.36.2
     # via fastapi
 sympy==1.12
     # via onnxruntime
