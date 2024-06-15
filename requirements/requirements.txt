@@ -114,7 +114,7 @@ pydantic-settings==2.0.3
     # via brag (pyproject.toml)
 python-dotenv==1.0.0
     # via pydantic-settings
-qdrant-client==1.6.4
+qdrant-client==1.9.0
     # via brag (pyproject.toml)
 requests==2.31.0
     # via fastembed
