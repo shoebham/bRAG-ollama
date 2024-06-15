@@ -4,7 +4,7 @@
 
 # from openai.types.chat import ChatCompletion
 
-import ollama
+from ollama import Client
 from app.chat.constants import ChatRolesEnum
 from app.chat.exceptions import RetrievalNoDocumentsFoundException
 from app.chat.models import BaseMessage,Message
@@ -19,27 +19,32 @@ from app.chat.streaming import stream_generator
 
 from async_generator import async_generator, yield_
 
+from app.db import messages_queries
+
+client = Client(host="http://localhost:11434")
 class OllamaService:
     @classmethod    
     async def chat_completion(cls,input_message:BaseMessage) ->  Message:
         logger.info(f"Recieved the following completion: {input_message}")
-        completion: str = ollama.chat(model=input_message.model,messages=[
+        completion: str = client.chat(model=input_message.model,messages=[
             {
                 'role':'user',
                 'content': input_message.message
             }
         ])
         logger.info(f"Got the following Response: {completion}")
-        return Message(
+        message = Message(
             model = input_message.model,
             role = "user",
             message=completion['message']['content'],
         )
+        messages_queries.insert(model=message.model,message=message.model,role=message.role)
+        return message
         
     
     @staticmethod
     async def chat_completion_with_streaming(input_message:BaseMessage) -> StreamingResponse:
-        subscription= ollama.chat(
+        subscription= client.chat(
               model = input_message.model,
             messages = [{"role":ChatRolesEnum.USER.value,"content":input_message.message}],
             stream=True

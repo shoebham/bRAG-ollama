@@ -34,8 +34,8 @@ async def qa_create(input_message: BaseMessage) -> Message:
         raise APIException
 
 
-# from app.db import messages_queries
+from app.db import messages_queries
 
-# @router.get("/v1/messages")
-# async def get_messages() -> list[Message]:
-#     return [Message(**message) for message in messages_queries.select_all()]
+@router.get("/v1/messages")
+async def get_messages() -> list[Message]:
+    return [Message(**message) for message in messages_queries.select_all()]
