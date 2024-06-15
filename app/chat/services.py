@@ -13,7 +13,6 @@ from starlette.responses import StreamingResponse
 from app.chat.constants import ChatRolesEnum, NO_DOCUMENTS_FOUND
 from app.chat.retrievals import process_retrieval
 from app.chat.streaming import stream_generator
-import ollama
 
 # openai_client = openai.AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
 
@@ -61,7 +60,7 @@ class OllamaService:
     async def qa_without_stream(cls,input_message: BaseMessage) -> Message:
         try:
             augmented_message: BaseMessage = process_retrieval(message=input_message)
-            print(augmented_message)
+            print(f"Augemented Message: {augmented_message}")
             return await cls.chat_completion(input_message=augmented_message)
         except RetrievalNoDocumentsFoundException:
             return Message(model=input_message.model, message=NO_DOCUMENTS_FOUND, role=ChatRolesEnum.ASSISTANT.value)

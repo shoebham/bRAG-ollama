@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     GENERATION_TIMEOUT_SEC: int = Field(env="GENERATION_TIMEOUT_SEC", default=120)
     DATABASE_URL: str = Field(env="DATABASE_URL",default="None")
 
-    QDRANT_HOST: str = Field(env = "QDRANT_HOST",default="localhost")
+    QDRANT_HOST: str = Field(env = "QDRANT_HOST",default="qdrant")
     QDRANT_PORT: int = Field(env = "QDRANT_PORT",default=6333)
     QDRANT_COLLECTION_NAME: str = Field(env = "QDRANT_COLLECTION_NAME",default="demo")
  

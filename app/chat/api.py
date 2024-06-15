@@ -2,8 +2,6 @@
 
 from fastapi import APIRouter
 
-import openai
-import ollama
 from app.chat.exceptions import APIException 
 from app.chat.models import BaseMessage,Message
 from app.chat.services import OllamaService

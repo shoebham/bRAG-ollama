@@ -13,7 +13,7 @@ from app.core.logs import logger
 
 client = QdrantClient(settings.QDRANT_HOST,port=settings.QDRANT_PORT)
 
-test_populate_vector_db(client=client)
+# test_populate_vector_db(client=client)
 
 
 def process_retrieval(message: BaseMessage) -> BaseMessage:
@@ -30,6 +30,7 @@ def process_retrieval(message: BaseMessage) -> BaseMessage:
 
 def search(query:str) -> str:
     search_result = client.query(collection_name=settings.QDRANT_COLLECTION_NAME,limit=3,query_text=query)
+    print(f"Search Result: {search_result}\n")
     if not search_result:
         raise RetrievalNoDocumentsFoundException 
     return "\n".join(result.document for result in search_result)
