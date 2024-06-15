@@ -34,7 +34,7 @@ coloredlogs==15.0.1
     # via onnxruntime
 distro==1.8.0
     # via openai
-fastapi==0.104.1
+fastapi==0.109.1
     # via brag (pyproject.toml)
 fastembed==0.1.1
     # via qdrant-client
