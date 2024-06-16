@@ -22,7 +22,9 @@ services:
     command: ["bash", "-c", "dbmate up && python -m uvicorn --host 0.0.0.0 --reload app.main:app"]
     env_file:
       - .env
-
+    environment:
+      OLLAMA_HOST: ollama  # Use localhost to connect to Ollama
+      OLLAMA_PORT: 11434       # Replace with actual port number of Ollama service
 
   qdrant:
     image: qdrant/qdrant:latest

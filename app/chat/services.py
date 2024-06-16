@@ -20,8 +20,9 @@ from app.chat.streaming import stream_generator
 from async_generator import async_generator, yield_
 
 from app.db import messages_queries
-
-client = Client(host="http://172.20.0.1:11434")
+import os
+ollama_host = os.getenv('OLLAMA_HOST')
+client = Client(host=ollama_host)
 class OllamaService:
     @classmethod    
     async def chat_completion(cls,input_message:BaseMessage) ->  Message:
