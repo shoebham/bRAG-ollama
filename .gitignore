@@ -93,3 +93,20 @@ venv.bak/
 cython_debug/
 # Ruff
 .ruff_cache/
+.DS_Store
+app/chat/__pycache__/api.cpython-311.pyc
+app/chat/__pycache__/services.cpython-311.pyc
+app/settings/__pycache__/base.cpython-311.pyc
+data/ollama/history
+data/ollama/id_ed25519
+data/ollama/id_ed25519.pub
+data/ollama/models/blobs/sha256-3f8eb4da87fa7a3c9da615036b0dc418d31fef2a30b115ff33562588b32c691d
+data/ollama/models/blobs/sha256-4fa551d4f938f68b8c1e6afa9d28befb70e3f33f75d0753248d530364aeea40f
+data/ollama/models/blobs/sha256-6a0746a1ec1aef3e7ec53868f220ff6e389f6f8ef87a01d77c96807de94ca2aa
+data/ollama/models/blobs/sha256-8ab4849b038cf0abc5b1c9b8ee1443dca6b93a045c2272180d985126eb40bf6f
+data/ollama/models/blobs/sha256-577073ffcc6ce95b9981eacc77d1039568639e5638e83044994560d9ef82ce1b
+data/ollama/models/manifests/registry.ollama.ai/library/llama3/latest
+app/__pycache__/main.cpython-311.pyc
+app/chat/__pycache__/api.cpython-311.pyc
+app/chat/__pycache__/services.cpython-311.pyc
+app/settings/__pycache__/base.cpython-311.pyc

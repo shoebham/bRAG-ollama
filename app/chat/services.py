@@ -21,7 +21,7 @@ from async_generator import async_generator, yield_
 
 from app.db import messages_queries
 
-client = Client(host="http://localhost:11434")
+client = Client(host="http://172.20.0.1:11434")
 class OllamaService:
     @classmethod    
     async def chat_completion(cls,input_message:BaseMessage) ->  Message:
