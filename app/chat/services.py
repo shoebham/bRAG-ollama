@@ -21,8 +21,7 @@ from async_generator import async_generator, yield_
 
 from app.db import messages_queries
 import os
-ollama_host = os.getenv('OLLAMA_HOST')
-client = Client(host=ollama_host)
+client = Client(host="http://host.docker.internal:11434")
 class OllamaService:
     @classmethod    
     async def chat_completion(cls,input_message:BaseMessage) ->  Message:
