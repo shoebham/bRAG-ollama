@@ -70,4 +70,8 @@ def search_pdf(query:str,collection_name:str) -> str:
     print(f"Search Result: {search_result}\n")
     if not search_result:
         raise RetrievalNoDocumentsFoundException 
-    return "\n".join(result["payload"]["text"] for result in search_result)
+    for result in search_result:
+        print(f"Result: result['payload']")
+    res = "\n".join(result.payload["text"] for result in search_result)
+    logger.info(f"Res: {res}")
+    return res
