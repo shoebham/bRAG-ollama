@@ -4,8 +4,9 @@ RUN curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/relea
 RUN pip install --no-cache-dir --upgrade pip
 WORKDIR /project
 COPY /requirements/requirements.txt /project/requirements.txt
+RUN pip cache remove \* 
 RUN pip install --no-cache-dir --no-deps --upgrade -r /project/requirements.txt
-RUN pip install --upgrade pip
 RUN pip install fastembed
+RUN pip install transformers -U
 COPY . /project
 CMD ["bash", "-c", "dbmate up & python -m uvicorn --host 0.0.0.0 --reload app.main:app   "]

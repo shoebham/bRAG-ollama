@@ -12,7 +12,7 @@ from app.core.logs import logger
 from app.settings import settings
 from starlette.responses import StreamingResponse
 from app.chat.constants import ChatRolesEnum, NO_DOCUMENTS_FOUND
-from app.chat.retrievals import process_retrieval
+from app.chat.retrievals import process_retrieval,process_retrieval_pdf
 from app.chat.streaming import stream_generator
 
 # openai_client = openai.AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
@@ -21,12 +21,12 @@ from async_generator import async_generator, yield_
 
 from app.db import messages_queries
 import os
-client = Client(host="http://host.docker.internal:11434")
+ollama_client = Client(host="http://host.docker.internal:11434")
 class OllamaService:
     @classmethod    
     async def chat_completion(cls,input_message:BaseMessage) ->  Message:
         logger.info(f"Recieved the following completion: {input_message}")
-        completion: str = client.chat(model=input_message.model,messages=[
+        completion: str = ollama_client.chat(model=input_message.model,messages=[
             {
                 'role':'user',
                 'content': input_message.message
@@ -44,7 +44,7 @@ class OllamaService:
     
     @staticmethod
     async def chat_completion_with_streaming(input_message:BaseMessage) -> StreamingResponse:
-        subscription= client.chat(
+        subscription= ollama_client.chat(
               model = input_message.model,
             messages = [{"role":ChatRolesEnum.USER.value,"content":input_message.message}],
             stream=True
@@ -66,6 +66,15 @@ class OllamaService:
     async def qa_without_stream(cls,input_message: BaseMessage) -> Message:
         try:
             augmented_message: BaseMessage = process_retrieval(message=input_message)
+            print(f"Augemented Message: {augmented_message}")
+            return await cls.chat_completion(input_message=augmented_message)
+        except RetrievalNoDocumentsFoundException:
+            return Message(model=input_message.model, message=NO_DOCUMENTS_FOUND, role=ChatRolesEnum.ASSISTANT.value)
+    
+    @classmethod
+    async def qa_without_stream_pdf(cls,input_message: BaseMessage) -> Message:
+        try:
+            augmented_message: BaseMessage = process_retrieval_pdf(message=input_message)
             print(f"Augemented Message: {augmented_message}")
             return await cls.chat_completion(input_message=augmented_message)
         except RetrievalNoDocumentsFoundException:

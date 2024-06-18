@@ -1,5 +1,10 @@
+tiktoken
+semchunk
 fastapi
 fastembed
+PyPDF2
+pdfplumber
+sentence_transformers
 async-timeout
 async_generator
 ollama

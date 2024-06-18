@@ -2,7 +2,7 @@
 name = "brag"
 version = "0.0.1"
 requires-python = ">=3.11"
-dependencies = ["fastapi","fastembed","async-timeout","async_generator","ollama", "openai", "pydantic-settings", "uvicorn", "gunicorn", "qdrant-client[fastembed]", "sentry-sdk", "pugsql", "psycopg2-binary"]
+dependencies = ["tiktoken","semchunk","fastapi","fastembed","PyPDF2","pdfplumber","sentence_transformers","async-timeout","async_generator","ollama", "openai", "pydantic-settings", "uvicorn", "gunicorn", "qdrant-client[fastembed]", "sentry-sdk", "pugsql", "psycopg2-binary"]
 
 [project.optional-dependencies]
 dev = ["ruff","black"]

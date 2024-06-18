@@ -11,6 +11,6 @@ app  = FastAPI(version=version)
 app.include_router(core_router)
 app.include_router(chat_router)
 
-logger.info("App is ready")
+logger.info("App is ready....")
 
 
