@@ -13,7 +13,7 @@ from app.core.logs import logger
 
 client = QdrantClient(settings.QDRANT_HOST,port=settings.QDRANT_PORT)
 
-# test_populate_vector_db(client=client)
+test_populate_vector_db(client=client)
 
 
 def process_retrieval(message: BaseMessage) -> BaseMessage:

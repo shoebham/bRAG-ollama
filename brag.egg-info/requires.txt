@@ -1,4 +1,5 @@
 fastapi
+fastembed
 async-timeout
 async_generator
 ollama
