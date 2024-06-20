@@ -7,8 +7,13 @@ from app.chat.models import BaseMessage,Message
 from app.chat.services import OllamaService
 from starlette.responses import StreamingResponse
 from app.db import messages_queries
+from fastapi.responses import FileResponse
 
 router = APIRouter(tags = ["Core Endpoints"])
+
+@router.get("/")
+async def read_index():
+    return FileResponse('static/index.html')
 
 @router.post("/v1/completion")
 async def completion_create(input_message:BaseMessage) -> Message:
