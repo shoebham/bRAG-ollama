@@ -41,6 +41,10 @@ class OllamaService:
         messages_queries.insert(model=message.model,message=message.model,role=message.role)
         return message
         
+    @staticmethod
+    async def async_generator_wrapper(sync_gen):
+        for item in sync_gen:
+            yield item 
     
     @staticmethod
     async def chat_completion_with_streaming(input_message:BaseMessage) -> StreamingResponse:
@@ -49,12 +53,8 @@ class OllamaService:
             messages = [{"role":ChatRolesEnum.USER.value,"content":input_message.message}],
             stream=True
         )
-
-        @staticmethod
-        async def async_generator_wrapper(sync_gen):
-            for item in sync_gen:
-                yield item
-        return StreamingResponse(stream_generator(async_generator_wrapper(subscription)),media_type="text/event-stream")
+       
+        return StreamingResponse(stream_generator(OllamaService.async_generator_wrapper(subscription)),media_type="text/event-stream")
 
 
     @staticmethod
@@ -70,6 +70,18 @@ class OllamaService:
             return await cls.chat_completion(input_message=augmented_message)
         except RetrievalNoDocumentsFoundException:
             return Message(model=input_message.model, message=NO_DOCUMENTS_FOUND, role=ChatRolesEnum.ASSISTANT.value)
+    
+    @classmethod
+    async def qa_with_stream(cls,input_message: BaseMessage,isPdf: bool = False) -> Message:
+        try:
+            augmented_message: BaseMessage = process_retrieval(message=input_message,isPdf=isPdf)
+            print(f"Augemented Message: {augmented_message}")
+            return await cls.chat_completion_with_streaming(input_message=augmented_message)
+        except RetrievalNoDocumentsFoundException:
+            return Message(model=input_message.model, message=NO_DOCUMENTS_FOUND, role=ChatRolesEnum.ASSISTANT.value)
+    
+
+
     
 
 
