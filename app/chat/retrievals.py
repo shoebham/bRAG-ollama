@@ -18,9 +18,12 @@ client = QdrantClient(settings.QDRANT_HOST,port=settings.QDRANT_PORT)
 # test_populate_vector_db(client=client)
 
 
-def process_retrieval(message: BaseMessage) -> BaseMessage:
+def process_retrieval(message:BaseMessage, isPdf: bool = False) -> BaseMessage:
     """Return top3 similar documents"""
-    search_result = search(query = message.message)
+    if isPdf:
+        search_result = search_pdf(query = message.message,collection_name="pdfs")
+    else:
+        search_result = search(query = message.message)
     resulting_query : str = (
         f"Answer Based on only context,nothing else\n"
         f"QUERY:\n{message.message}\n"
@@ -28,20 +31,7 @@ def process_retrieval(message: BaseMessage) -> BaseMessage:
     )
     logger.info(f"Resulting Query: {resulting_query}\n")
     return BaseMessage(message=resulting_query,model=message.model)
-
-
-def process_retrieval_pdf(message: BaseMessage) -> BaseMessage:
-    """Return top3 similar documents"""
-    search_result = search_pdf(query = message.message,collection_name="pdfs")
-    resulting_query : str = (
-        f"Answer Based on only context,nothing else\n"
-        f"QUERY:\n{message.message}\n"
-        f"CONTEXT:\n{search_result}\n"
-    )
-    logger.info(f"Resulting Query: {resulting_query}\n")
-    return BaseMessage(message=resulting_query,model=message.model)
-
-
+    
 
 def search(query:str) -> str:
     search_result = client.query(collection_name=settings.QDRANT_COLLECTION_NAME,limit=3,query_text=query)

@@ -63,19 +63,15 @@ class OllamaService:
     
 
     @classmethod
-    async def qa_without_stream(cls,input_message: BaseMessage) -> Message:
+    async def qa_without_stream(cls,input_message: BaseMessage,isPdf: bool = False) -> Message:
         try:
-            augmented_message: BaseMessage = process_retrieval(message=input_message)
+            augmented_message: BaseMessage = process_retrieval(message=input_message,isPdf=isPdf)
             print(f"Augemented Message: {augmented_message}")
             return await cls.chat_completion(input_message=augmented_message)
         except RetrievalNoDocumentsFoundException:
             return Message(model=input_message.model, message=NO_DOCUMENTS_FOUND, role=ChatRolesEnum.ASSISTANT.value)
     
-    @classmethod
-    async def qa_without_stream_pdf(cls,input_message: BaseMessage) -> Message:
-        try:
-            augmented_message: BaseMessage = process_retrieval_pdf(message=input_message)
-            print(f"Augemented Message: {augmented_message}")
-            return await cls.chat_completion(input_message=augmented_message)
-        except RetrievalNoDocumentsFoundException:
-            return Message(model=input_message.model, message=NO_DOCUMENTS_FOUND, role=ChatRolesEnum.ASSISTANT.value)
+
+
+
+

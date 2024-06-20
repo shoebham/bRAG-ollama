@@ -37,7 +37,7 @@ async def qa_create(input_message: BaseMessage) -> Message:
 @router.post("/v1/qa-create-pdf")
 async def qa_create(input_message: BaseMessage) -> Message:
     try:
-        return await OllamaService.qa_without_stream_pdf(input_message=input_message)
+        return await OllamaService.qa_without_stream(input_message=input_message,isPdf=True)
     except:
         raise APIException
 from app.db import messages_queries
