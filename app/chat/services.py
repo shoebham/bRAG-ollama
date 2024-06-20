@@ -12,7 +12,7 @@ from app.core.logs import logger
 from app.settings import settings
 from starlette.responses import StreamingResponse
 from app.chat.constants import ChatRolesEnum, NO_DOCUMENTS_FOUND
-from app.chat.retrievals import process_retrieval,process_retrieval_pdf
+from app.chat.retrievals import process_retrieval
 from app.chat.streaming import stream_generator
 
 # openai_client = openai.AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
