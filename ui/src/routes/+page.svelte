@@ -10,6 +10,7 @@
 		beforeUpdate,
 		afterUpdate
 	} from 'svelte';
+	import { marked } from 'marked';
 
 	let div;
 
@@ -49,13 +50,13 @@
 	}
 	async function handleKeyDown(e){
 		if(e.key == "Enter"&& e.target.value){
+  			e.preventDefault();
 			const userMessage = e.target.value;
 			const message = {
 				author: 'user',
 				content: userMessage
 			}
 			e.target.value="";
-
 			messages=[...messages,message];
 			messages= [...messages, typing];
 
@@ -74,13 +75,12 @@
 		<div class="chats" bind:this={div}>
 			{#each messages as message}
 				<article class={message.author}>
-					<span>{message.content}</span>
+					<span>{@html marked(message.content)}	</span>
 				</article>
 			{/each}
 		</div>
-		<div class="chatbox" >
-			<textarea placeholder="Enter your message" class ="chatbox-input" on:keydown={handleKeyDown} bind:value={currentMessage}/>
-		</div>
+
+		<textarea placeholder="Enter your message" class ="chatbox chatbox-input" on:keydown={handleKeyDown} bind:value={currentMessage}/>
 		
 	</div>
 
@@ -102,10 +102,13 @@
 		margin-top:20px;
 		padding:auto;
 		position: relative;
+		display: flex;
+		flex-direction: column;
 	}
 	.chats{
+		height: 0;
 		flex: 1 1 auto;
-		padding:20px 1em;
+		padding: 0 1em;
 		overflow-y: auto;
 		scroll-behavior: smooth;
 	}
@@ -136,24 +139,21 @@
 
 	
 	.chatbox{
-		width: 98%;
+		width: 90%;
 		height: 7vh;
 		border: 1px solid #1818188c;
 		box-shadow:-5px -1px 4px 0px #151515;
 		border-radius: 25px;
-		position: absolute;
+		position:relative;
 		bottom: 0;
-		margin:8px;
 	}
 
 	textarea.chatbox-input{
     	background-color: rgb(56, 56, 56);
-		width: 90%;
-		height: 70%;
 		font-size: 19px;
-		margin-left:50px;
-		margin-top:8px;
-		margin-bottom: 50px;
+		margin-left:75px;
+		margin-bottom:25px;
+		margin-right: 100px;
 		border: none;
 		border-radius: 25px;
 		resize: none;
@@ -165,5 +165,10 @@
 	textarea:focus{
 		outline: none;
 	}
+		@media (prefers-reduced-motion) {
+		.chat {
+			scroll-behavior: auto;
+		}
 
+	}
 </style>
