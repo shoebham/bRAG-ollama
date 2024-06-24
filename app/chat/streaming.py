@@ -13,19 +13,20 @@ from app.settings import settings
 
 from app.db import messages_queries
 async def stream_generator(subscription):
-    async with async_timeout.timeout(5):
-        try:
+    try:
+        async with async_timeout.timeout(settings.GENERATION_TIMEOUT_SEC):
             complete_response: str = ""
             for chunk in subscription:
-                # print("chunk:",chunk)
                 complete_response = f"{complete_response}{Chunk.get_chunk_delta_content(chunk=chunk)}"
                 yield format_to_event_stream(post_processing(chunk))
-            message: Message = Message(model=chunk["model"],message=complete_response,role=ChatRolesEnum.ASSISTANT.value)
+                await asyncio.sleep(0)  # Allow other tasks to run
+
+            # Store the complete message after streaming
+            message: Message = Message(model=chunk["model"], message=complete_response, role=ChatRolesEnum.ASSISTANT.value)
             messages_queries.insert(model=message.model, message=message.message, role=message.role)
             logger.info(f"Complete Streamed Message: {message}")
-        except asyncio.TimeoutError:
-            raise StreamTimeoutException
-        
+    except asyncio.TimeoutError:
+        raise StreamTimeoutException
 def format_to_event_stream(data:str)->str:
     return f"event: message\ndata: {data}\n\n"
 
