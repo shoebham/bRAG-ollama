@@ -54,7 +54,7 @@ class OllamaService:
             stream=True
         )
        
-        return StreamingResponse(stream_generator(OllamaService.async_generator_wrapper(subscription)),media_type="text/event-stream")
+        return StreamingResponse(stream_generator((subscription)),media_type="text/event-stream")
 
 
     @staticmethod

@@ -13,10 +13,10 @@ from app.settings import settings
 
 from app.db import messages_queries
 async def stream_generator(subscription):
-    async with async_timeout.timeout(settings.GENERATION_TIMEOUT_SEC):
+    async with async_timeout.timeout(5):
         try:
             complete_response: str = ""
-            async for chunk in subscription:
+            for chunk in subscription:
                 # print("chunk:",chunk)
                 complete_response = f"{complete_response}{Chunk.get_chunk_delta_content(chunk=chunk)}"
                 yield format_to_event_stream(post_processing(chunk))
