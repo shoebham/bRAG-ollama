@@ -37,36 +37,57 @@
 	let messages = [];
 	let currentMessage = "";
 	async function sendMessage(message){
-		 const response = await fetch(`${BASE_URL}/v1/completion`, {
+		 const response = await fetch(`${BASE_URL}/v1/completion-stream`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ message: message, model: "llama3" }),
                 });
-		const data = await response.json();
-		console.log(data);
-		return data.message;
+		// const data = await response
+		const reader = response.body?.getReader();
+		let accumulatedResponse = ''
+		const readChunk = async () => {
+			try {
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+
+                const chunkString = new TextDecoder().decode(value);
+				console.log(chunkString);
+				// Split the chunkString by new lines
+				const lines = chunkString.split('\n');
+				for (const line of lines) {
+					if (line.startsWith('data: ')) {
+						const jsonString = line.slice(6); // Remove 'data: ' prefix
+						const jsonData = JSON.parse(jsonString);
+						accumulatedResponse += jsonData.content;
+						
+						// Update the last message in the messages array
+						messages[messages.length - 1].content = accumulatedResponse;
+						messages = messages; // Trigger Svelte reactivity
+					}
+				}
+            }
+			} catch (error) {
+				console.error('Error reading stream:', error);
+			}
+		}
+		// readChunk();
+		// console.log(data);
+		return readChunk();
 	}
 	async function handleKeyDown(e){
-		if(e.key == "Enter"&& e.target.value){
-  			e.preventDefault();
+		if (e.key == "Enter" && e.target.value) {
+			e.preventDefault();
 			const userMessage = e.target.value;
-			const message = {
-				author: 'user',
-				content: userMessage
-			}
-			e.target.value="";
-			messages=[...messages,message];
-			messages= [...messages, typing];
-
-			// console.log(e.target);
-			const reply = {
-				author:'system',
-				content:await sendMessage(userMessage)
-			}
-			messages = [...messages, reply].filter(comment => comment !== typing);
-
+			e.target.value = "";
+			messages = [...messages, { author: 'user', content: userMessage }];
+			
+			// Add an initial empty message for the system response
+			messages = [...messages, { author: 'system', content: '' }];
+			
+			await sendMessage(userMessage);
 		}
 	}
 </script>
