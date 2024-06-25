@@ -36,19 +36,14 @@
 	});
 
 	const BASE_URL="http://localhost:8000"
+	const pdfEndpoint= "v1/qa-create-pdf-stream";
+	const chatEndpoint="v1/completion-stream";
+	let endpoint = chatEndpoint;
+
 	let messages = [];
 	let currentMessage = "";
-	async function sendMessage(message){
-		const formData = new FormData();
-		formData.append('model',"llama3");
-		formData.append('message', message);
-		if (pdfFile) {
-			formData.append('pdf_file', pdfFile);
-		}
-		const response = await fetch(`${BASE_URL}/v1/qa-create-pdf-stream`, {
-			method: 'POST',
-			body: formData
-		});
+	async function sendMessage(message){	
+		const response = await (pdfPreviewUrl!=null?readPdf(message):normalChat(message));
 		const reader = response.body?.getReader();
 		let accumulatedResponse = ''
 		const readChunk = async () => {
@@ -77,7 +72,30 @@
 		}
 		pdfFile = null;
 		pdfPreviewUrl = null;
+		endpoint = chatEndpoint;
 		return readChunk();
+	}
+
+	async function readPdf(message){
+		const formData = new FormData();
+		formData.append('model',"llama3");
+		formData.append('message', message);
+		if (pdfFile) {
+			formData.append('pdf_file', pdfFile);
+		}
+		return fetch(`${BASE_URL}/${pdfEndpoint}`, {
+			method: 'POST',
+			body: formData
+		});
+	}
+	async function normalChat(message){
+ 		return fetch(`${BASE_URL}/${chatEndpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message, model: "llama3" }),
+                });
 	}
 	async function handleKeyDown(e){
 		if (e.key == "Enter" && e.target.value) {
@@ -100,6 +118,7 @@
 			if (files.length > 0) {
 				pdfFile = files[0];
 				pdfPreviewUrl = URL.createObjectURL(pdfFile);
+				endpoint = pdfEndpoint;
 			}
 		};
 		input.click();
