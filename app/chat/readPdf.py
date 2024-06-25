@@ -1,3 +1,4 @@
+from io import BytesIO
 from PyPDF2 import PdfReader 
 
 from app.settings import settings
@@ -21,8 +22,8 @@ def init_qdrant_client(client):
     #for checking collection information
     return client
 
-def load_split_pdf(pdf_path):
-    pdf_loader = PdfReader(open(pdf_path, "rb"))
+def load_split_pdf(pdf_content):
+    pdf_loader = PdfReader(BytesIO(pdf_content))
     pdf_text = ""
     for page_num in range(len(pdf_loader.pages)):
         pdf_page = pdf_loader.pages[page_num]
@@ -63,10 +64,10 @@ def insert_data(client,points):
     )
     
 
-def start(client):
-    pdf_path = "app/chat/Shubham-Gupta-Resume copy.pdf"
+def start(client,pdf_content):
+    print("in start client ",pdf_content)
     init_qdrant_client(client=client)
-    pdf_text = load_split_pdf(pdf_path)
+    pdf_text = load_split_pdf(pdf_content)
     chunked_pdf_text = chunk_text(pdf_text)
     embeddings = get_embedding(chunked_pdf_text)
     insert_data(client,embeddings)

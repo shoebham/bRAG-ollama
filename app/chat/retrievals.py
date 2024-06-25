@@ -18,10 +18,10 @@ client = QdrantClient(settings.QDRANT_HOST,port=settings.QDRANT_PORT)
 # test_populate_vector_db(client=client)
 
 
-def process_retrieval(message:BaseMessage, isPdf: bool = False) -> BaseMessage:
+def process_retrieval(message:BaseMessage, isPdf: bool = False,pdf_content:bytes=None) -> BaseMessage:
     """Return top3 similar documents"""
     if isPdf:
-        search_result = search_pdf(query = message.message,collection_name="pdfs")
+        search_result = search_pdf(query = message.message,pdf_content=pdf_content,collection_name="pdfs")
     else:
         search_result = search(query = message.message)
     resulting_query : str = (
@@ -43,8 +43,8 @@ def search(query:str) -> str:
     return res
 
 
-def search_pdf(query:str,collection_name:str) -> str:
-    start(client=client)
+def search_pdf(query:str,pdf_content:bytes,collection_name:str) -> str:
+    start(client=client,pdf_content=pdf_content)
     from app.chat.services import ollama_client
     response= ollama_client.embeddings(
         model='mxbai-embed-large',

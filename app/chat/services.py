@@ -18,6 +18,7 @@ from app.chat.streaming import stream_generator
 # openai_client = openai.AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
 
 from async_generator import async_generator, yield_
+from fastapi import FastAPI, File, UploadFile
 
 from app.db import messages_queries
 import os
@@ -70,11 +71,17 @@ class OllamaService:
             return await cls.chat_completion(input_message=augmented_message)
         except RetrievalNoDocumentsFoundException:
             return Message(model=input_message.model, message=NO_DOCUMENTS_FOUND, role=ChatRolesEnum.ASSISTANT.value)
-    
+
     @classmethod
-    async def qa_with_stream(cls,input_message: BaseMessage,isPdf: bool = False) -> Message:
+    async def qa_with_stream(cls,input_message: BaseMessage,isPdf: bool = False,pdf_file:UploadFile=File(...)) -> Message:
+        print("In qa_with_stream")
         try:
-            augmented_message: BaseMessage = process_retrieval(message=input_message,isPdf=isPdf)
+            if isPdf and pdf_file:
+                pdf_content = await pdf_file.read()
+                print(f"PDF content length: {len(pdf_content)} bytes")
+            else:
+                pdf_content = None
+            augmented_message: BaseMessage = process_retrieval(message=input_message,isPdf=isPdf,pdf_content=pdf_content)
             print(f"Augemented Message: {augmented_message}")
             return await cls.chat_completion_with_streaming(input_message=augmented_message)
         except RetrievalNoDocumentsFoundException:
