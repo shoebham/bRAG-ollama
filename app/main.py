@@ -6,12 +6,10 @@ from app import version
 from app.core.logs import logger
 from app.core.api import router as core_router
 from app.chat.api import router as chat_router
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 app  = FastAPI(version=version)
 # Mount the directory containing your HTML file
-app.mount("/Users/shubhamgupta/Desktop/my-stuff/projects/bRAG/static", StaticFiles(directory="static"), name="static")
 
 origins = ["*"]
 from fastapi import Request
